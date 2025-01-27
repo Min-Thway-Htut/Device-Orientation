@@ -19,3 +19,14 @@ body{
     color: #fff;
     text-align: center;
 }
+button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border-radius: 10px;
+    border-color: rgb(29, 98, 75);
+}
+button:hover{
+    background-color: red;
+}

@@ -1,17 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Device Orientation</title>
+    <title>Device Orientation Data</title>
 </head>
 <body>
-    <div class="container">
-        <p id="alpha">Alpha Value: null</p>
-        <p id="beta">Beta Value: null</p>
-        <p id="gamma">Gamma Value: null</p>
-    </div>
+
+    <p>Device Orientation:</p>
+    <p>x: <span id="x"></span></p>
+    <p>y: <span id="y"></span></p>
+    <p>z: <span id="z"></span></p>
+
+    <button id="sendData">Send Data</button>
+
+    <script>
+        window.addEventListener('deviceorientation', (event) => {
+            document.getElementById('x').textContent = event.alpha;
+            document.getElementById('y').textContent = event.beta;
+            document.getElementById('z').textContent = event.gamma;
+        });
+
+        document.getElementById('sendData').addEventListener('click', () => {
+            const x = document.getElementById('x').textContent;
+            const y = document.getElementById('y').textContent;
+            const z = document.getElementById('z').textContent;
+
+            fetch('/send_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ x, y, z })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
 </body>
-<script src="script.js"></script>
 </html>
