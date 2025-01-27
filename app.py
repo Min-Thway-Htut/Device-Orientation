@@ -1,45 +1,18 @@
-from flask import Flask, render_template, request,  redirect, session
+from flask import Flask, render_template, request, jsonify
 
-app = Flask(__name__)
-
-app.secret_key = 'my_secret_key'
-
-users = {
-    'kunal': '1234',
-    'user2': 'password2'
-}
+app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
-def view_form():
-    return render_template('login.html')
+def hello():
+    return render_template('index.html')
 
-@app.route('/handle_get', methods=['GET'])
-def handle_get():
-    if request.method == 'GET':
-        username = request.args['username']
-        password = request.args['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!</h1>'
-        else:
-            return '<h1>invalid credentials</h1>'
-        
-    else: 
-        return render_template('login.html')
-    
-@app.route('/handle_post', methods=['POST'])
-def handle_post():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!</h1>'
-        else:
-            return '<h1>invalid credentials</h1>'
-    else:
-        return render_template('login.html')
-    
+@app.route('/process', methods=['POST'])
+def process():
+    data = request.get_json()
+
+    result = data['value'] * 2
+    return jsonify(result=result)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5004)
+
