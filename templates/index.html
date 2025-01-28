@@ -1,29 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>JavaScript to Python Example</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css" />
+    <title>Device Orientation</title>
 </head>
 <body>
-    <input type="text" id="input">
-    <button onclick="sendData()">Send Data</button>
-    <div id="output"></div>
-    <script>
-        function sendData() {
-            var value = document.getElementById('input').value;
-            $.ajax({
-                url: '/process',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ 'value': value }),
-                success: function(response) {
-                    document.getElementById('output').innerHTML = response.result;
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-    </script>
+    <h1>Device Orientation</h1>
+    <p id="alpha">Alpha: </p>
+    <p id="beta">Beta: </p>
+    <p id="gamma">Gamma: </p>
+
+    <button id="sendDataBtn">Send Data</button>
+    <script src="/static/script.js"></script>
 </body>
 </html>
